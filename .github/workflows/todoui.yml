@@ -1,45 +1,33 @@
-name: CI-Pipeline
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - dev
-          - qa
-          - prod
-permissions:
-  contents: read
-  id-token: write
+name: Frontend CI - Build & Push to Harbor
+
+on: workflow_dispatch
+  # push:
+  #   branches:
+  #     - main
+  #     - develop
+
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted
+  build-and-push:
+    runs-on: self-hosted   # tumhara Mac runner
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: Install Dependencies
-        run: npm install
-      - name: Run Tests
-        run: npm test
-      - name: Build Application
-        run: npm run build
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: todo-ui-build
-          path: build/
-          
-      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        run: docker --version
+
+      - name: Login to Harbor
+        run: |
+          echo "${{ secrets.HARBOR_PASSWORD }}" | docker login \
+            ${{ secrets.HARBOR_URL }} \
+            -u ${{ secrets.HARBOR_USERNAME }} \
+            --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.HARBOR_URL }}/library/frontend-ui:latest .
+
+      - name: Push image to Harbor
+        run: |
+          docker push ${{ secrets.HARBOR_URL }}/library/frontend-ui:latest
