@@ -9,10 +9,7 @@ on: workflow_dispatch
 jobs:
   build-and-push:
     # runs-on: self-hosted   # tumhara Mac runner
-    runs-on:
-      - self-hosted
-      - macOS
-      - docker
+    runs-on: ubuntu-latest
 
 
     steps:
