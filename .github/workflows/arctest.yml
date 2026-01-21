@@ -1,0 +1,12 @@
+name: ARC Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: aks-arc-dind
+    steps:
+      - run: echo "Runner is working"
+      - run: python --version
+      - run: docker version
