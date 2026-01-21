@@ -5,8 +5,9 @@ on:
 
 jobs:
   test:
-    runs-on: aks-arc-dind
+    runs-on: [self-hosted, aks-arc-dind]
     steps:
-      - run: echo "Runner is working"
+      - run: echo "Runner picked"
       - run: python --version
       - run: docker version
+
