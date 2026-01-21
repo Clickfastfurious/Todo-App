@@ -3,6 +3,7 @@ name: ARC Test
 on:
   workflow_dispatch:
 
+
 jobs:
   test:
     runs-on: [self-hosted, aks-arc-dind]
