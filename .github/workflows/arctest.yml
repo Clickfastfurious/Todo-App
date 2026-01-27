@@ -1,13 +1,23 @@
-name: Test ARC Runner
+# name: Test ARC Runner
 
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   test:
+#     runs-on: [self-hosted, arc, aks, dind]
+#     steps:
+#       - name: Hello from ARC runner
+#         run: |
+#           echo "Runner hostname: $(hostname)"
+#           docker version
+name: Actions Runner Controller Demo
 on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: [self-hosted, arc, aks, dind]
+  Explore-GitHub-Actions:
+    # You need to use the INSTALLATION_NAME from the previous step
+    runs-on: arc-runner-set
     steps:
-      - name: Hello from ARC runner
-        run: |
-          echo "Runner hostname: $(hostname)"
-          docker version
+    - run: echo "🎉 This job uses runner scale set runners!"
