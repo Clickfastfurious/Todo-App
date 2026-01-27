@@ -1,14 +1,13 @@
-name: ARC Test
+name: Test ARC Runner
 
 on:
   workflow_dispatch:
 
-
 jobs:
   test:
-    runs-on: [self-hosted, aks-arc-dind]
+    runs-on: [self-hosted, arc, aks, dind]
     steps:
-      - run: echo "Runner picked"
-      - run: python --version
-      - run: docker version
-
+      - name: Hello from ARC runner
+        run: |
+          echo "Runner hostname: $(hostname)"
+          docker version
