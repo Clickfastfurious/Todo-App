@@ -11,13 +11,26 @@
 #         run: |
 #           echo "Runner hostname: $(hostname)"
 #           docker version
-name: Actions Runner Controller Demo
-on:
-  workflow_dispatch:
+# name: Actions Runner Controller Demo
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   Explore-GitHub-Actions:
+#     # You need to use the INSTALLATION_NAME from the previous step
+#     runs-on: ubuntu-20-04-16g
+#     steps:
+#     - run: echo "🎉 This job uses runner scale set runners!"
+name: ARC Test
+on: [push]
 
 jobs:
-  Explore-GitHub-Actions:
-    # You need to use the INSTALLATION_NAME from the previous step
-    runs-on: ubuntu-20-04-16g
+  test:
+    runs-on:
+      - self-hosted
+      - ubuntu-20-04-16g
     steps:
-    - run: echo "🎉 This job uses runner scale set runners!"
+      - run: |
+          echo "Runner hostname: $(hostname)"
+          docker --version || echo "Docker not installed yet"
+
