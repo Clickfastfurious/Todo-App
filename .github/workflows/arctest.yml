@@ -48,6 +48,7 @@ jobs:
         run: |
           docker version
           docker info
+          
 
       - name: Build test image
         run: |
